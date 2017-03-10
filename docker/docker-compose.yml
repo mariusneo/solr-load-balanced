@@ -1,0 +1,36 @@
+version: '2'
+services:
+  solr-master:
+    image: solr
+    command: ["solr", "-f"]
+    environment:
+      - SOLR_HOME=/mysolrhome
+    ports:
+      - "8984:8983"
+    volumes:
+      - "./solr/master:/mysolrhome"
+  
+  solr-slave:
+    image: solr
+    command: ["solr", "-f"]
+    environment:
+      - SOLR_HOME=/mysolrhome
+    links:
+      - solr-master
+    ports:
+      - "8985:8983"
+    volumes:
+      - "./solr/slave:/mysolrhome"
+  
+
+  haproxy:
+    build: .
+    build:
+      context: haproxy
+      dockerfile: Dockerfile
+    links:
+      - solr-master
+      - solr-slave
+    ports:
+      - "80:80"
+
