@@ -1,36 +1,26 @@
 version: '2'
 services:
   solr-master:
-    image: solr
-    command: ["solr", "-f"]
-    environment:
-      - SOLR_HOME=/mysolrhome
-    ports:
-      - "8984:8983"
-    volumes:
-      - "./solr/master:/mysolrhome"
-  
-  solr-slave:
-    image: solr
-    command: ["solr", "-f"]
-    environment:
-      - SOLR_HOME=/mysolrhome
-    links:
-      - solr-master
-    ports:
-      - "8985:8983"
-    volumes:
-      - "./solr/slave:/mysolrhome"
-  
-
-  haproxy:
     build: .
     build:
-      context: haproxy
+      context: solr/master
       dockerfile: Dockerfile
+    command: ["solr", "-f"]
+    environment:
+        SERVICE_NAME: 'solr-master'
+        SERVICE_TAGS: 'solr-master'
+        SERVICE_CHECK_HTTP: '/solr/sortdemo/select?rows=0&q=*:*'
+        SERVICE_CHECK_INTERVAL: '5s'
+  
+  solr-slave:
+    build:
+          context: solr/slave
+          dockerfile: Dockerfile
+    command: ["solr", "-f"]
     links:
       - solr-master
-      - solr-slave
-    ports:
-      - "80:80"
-
+    environment:
+        SERVICE_NAME: 'solr-slave'
+        SERVICE_TAGS: 'solr-slave'
+        SERVICE_CHECK_HTTP: '/solr/sortdemo/select?rows=0&q=*:*'
+        SERVICE_CHECK_INTERVAL: '5s'
