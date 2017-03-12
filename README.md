@@ -19,7 +19,8 @@ Once everything is set on the localhost:
 
 , the haproxy statistics can be seen on the page:
 
-http://localhost/haproxy?stats
+
+[]http://localhost/haproxy?stats](http://localhost/haproxy?stats)
 
 
 I started the master solr with
@@ -83,9 +84,12 @@ The exposed URLs are:
 - http://proxy-admin.infra.127.0.0.1.xip.io haproxy statistics page
 - http://consul-admin.infra.127.0.0.1.xip.io/ consul statistics page
 
-Once everything is setup, you should see the haproxy and consul statistics:
+Once everything is setup, you should see the haproxy statistics:
 
 ![haproxy stats](img/haproxy-solr-configuration.png)
+
+and consul statistics:
+
 ![consul stats for the solr-slave instances](img/consul-solr-slave-configuration.png)
 
 
