@@ -64,7 +64,7 @@ file as it is from [docker-consul-demo](https://github.com/camptocamp/docker-con
 Once the load balancing infrastructure is in place, the next step is to load the solr master and slave instance(s).
 
 ```
-  docker$ docker$ sudo docker-compose up -d
+  docker$ sudo docker-compose up -d
 ```
 
 
@@ -72,7 +72,7 @@ In order to scale the solr slave instance, just run the following command
 
 
 ```
-  docker$ docker$ sudo docker-compose scale solr-slave=2
+  docker$ sudo docker-compose scale solr-slave=2
 ```
 
 
